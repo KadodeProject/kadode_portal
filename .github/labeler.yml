@@ -1,0 +1,12 @@
+# @format
+
+📡portal:
+  - portal/*
+⚡infra:
+  - docker-compose.yml
+  - infra/*
+🐙github:
+  - .github/*
+📄docs:
+  - README.md
+  - LICENSE
