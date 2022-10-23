@@ -1,7 +1,7 @@
 # @format
 
 📡portal:
-  - portal/*
+  - frontend/*
 ⚡infra:
   - docker-compose.yml
   - infra/*
