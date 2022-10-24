@@ -1,12 +1,13 @@
-# @format
-
 📡portal:
-  - portal/*
-⚡infra:
+  - frontend/*
+🏠localInfra:
   - docker-compose.yml
-  - infra/*
+  - infra/dev/*
 🐙github:
   - .github/*
+✈ci:
+  - .github/workflows/*
+  - .github/labeler.yml
 📄docs:
   - README.md
   - LICENSE

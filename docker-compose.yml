@@ -3,9 +3,9 @@ services:
   deno:
     build:
       context: .
-      dockerfile: ./infra/deno/Dockerfile
+      dockerfile: ./infra/dev/deno/Dockerfile
     volumes:
-      - ./portal:/frontend
+      - ./frontend:/frontend
     environment:
       TZ: Asia/Tokyo
     tty: true
@@ -13,7 +13,7 @@ services:
       - 8000:8000
 
   nginx:
-    build: ./infra/nginx
+    build: ./infra/dev/nginx
     ports:
       - "80:80"
     depends_on:
