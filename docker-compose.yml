@@ -15,6 +15,6 @@ services:
   nginx:
     build: ./infra/dev/nginx
     ports:
-      - "80:80"
+      - "7002:80"
     depends_on:
       - "deno"
