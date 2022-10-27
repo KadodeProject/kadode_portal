@@ -1,4 +1,5 @@
 :root {
+  /* CSSにも色を定義しているがtwindでも使えるようにしているので実は不要 */
   --kn-black: #2f3437;
   --kn-white: #f9fff9;
   --kn-d-purple: #624464;
