@@ -10,11 +10,4 @@ services:
       TZ: Asia/Tokyo
     tty: true
     ports:
-      - 8000:8000
-
-  nginx:
-    build: ./infra/dev/nginx
-    ports:
-      - "7002:80"
-    depends_on:
-      - "deno"
+      - 7002:8000
