@@ -1,0 +1,74 @@
+:root {
+  --kn-black: #2f3437;
+  --kn-white: #f9fff9;
+  --kn-d-purple: #624464;
+  --kn-d-blue: #4b8996;
+  --kb-d-brown: #8a8772;
+  --kn-l-purple: #ac78b0;
+  --kn-l-blue: #71d0e3;
+  --kn-l-brown: #d6d2b2;
+  --kn-s-1: #33769c;
+  --kn-s-2: #339c76;
+  --kn-s-3: #e2534a;
+  --kn-a-yellow: #id7bd57;
+  --knn-a-light-blue: #d8e4ee;
+  --kn-a-green: #7e9e7f;
+  --heder-height: 40px;
+  --footer-height: 120px;
+  --main-padding-top: 20px;
+  --main-max-width: 1300px;
+}
+@font-face {
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Kiwi Maru";
+  src: url("../fonts/KiwiMaru-Medium.ttf") format("truetype");
+}
+body {
+  scroll-behavior: smooth;
+  background-color: var(--kn-white);
+  background-image: url("../img/bg/Sprinkle.svg");
+  color: var(--kn-black);
+  font-family: "Kiwi Maru";
+  counter-reset: number;
+}
+/* 利用規約などの番号用 */
+.counter-wrapper .desc-card {
+  counter-increment: number;
+}
+.counter-wrapper .desc-card > h2:before {
+  content: "第" counter(number) "条 ";
+}
+main {
+  max-width: 38rem;
+  padding: 2rem;
+  margin: auto;
+}
+header {
+  height: var(--heder-height);
+  background-color: var(--m8u-2);
+  color: var(--m8u-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer {
+  min-height: var(--footer-height);
+  background-color: var(--m8u-5);
+  color: var(--m8u-black);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+main {
+  max-width: var(--main-max-width);
+  margin: 0 auto;
+  min-height: calc(100vh - var(--heder-height) - var(--footer-height));
+  padding-top: var(--main-padding-top);
+}
+.basis-height {
+  height: calc(
+    100vh - var(--main-padding-top) - var(--heder-height) - var(--footer-height)
+  );
+}
