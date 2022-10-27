@@ -1,0 +1,43 @@
+import { KadodeDiaryDayChange, OperationCoreE } from "@🍚/kadodeApi.ts";
+
+const API_URL: string = Deno.env.get("API_URL");
+const DAY_ENDPOINBT = API_URL + "/OperationCoreTransitionPerHours/relative/day";
+
+export type getDayT = {
+  all: OperationCoreE[];
+  total: OperationCoreE;
+  last1Day: KadodeDiaryDayChange;
+};
+
+if (API_URL === undefined) {
+  throw new Error(
+    "API_URLが設定できていません!!",
+  );
+}
+export async function getDayChange(): Promise<getDayT> {
+  const resp = await fetch(DAY_ENDPOINBT, {
+    method: "GET",
+  });
+  if (!resp.ok) {
+    const body = await resp.text();
+    throw new Error(`${resp.status} ${body}`);
+  }
+  const json: OperationCoreE[] = await resp.json();
+  if (json.errors) {
+    throw new Error(json.errors.map((e: Error) => e.message).join("\n"));
+  }
+  const firstDay: OperationCoreE = json[0];
+  //jsonの最初と最初の値を比較することで1日の増加を得る
+  const dayChange: KadodeDiaryDayChange = {
+    user_change: json[0].user_total - json[json.length - 1].user_total,
+    diary_change: json[0].diary_total - json[json.length - 1].diary_total,
+    statistic_per_date_change: json[0].statistic_per_date_total -
+      json[json.length - 1].statistic_per_date_total,
+  };
+
+  return {
+    all: json,
+    total: firstDay,
+    last1Day: dayChange,
+  };
+}
