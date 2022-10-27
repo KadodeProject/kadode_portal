@@ -1,5 +1,14 @@
-📡portal:
-  - frontend/*
+🏝islands:
+  - frontend/islands
+🍚types:
+  - frontend/types
+💿libs:
+  - frontend/libs
+🧩components:
+  - frontend/components
+  - frontend/layouts
+👗satic:
+  - frontend/static
 🏠localInfra:
   - docker-compose.yml
   - infra/dev/*

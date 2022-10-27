@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["kadode"]
+  "cSpell.words": ["kadode"],
+  "editor.defaultFormatter": "denoland.vscode-deno"
 }
