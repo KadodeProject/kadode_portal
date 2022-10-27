@@ -12,16 +12,16 @@ export default function UserChangeCard({
   unit,
 }: UserChangeT) {
   return (
-    <div class="flex justify-center items-center flex-col bg-kn_white rounded-2xl p-4">
+    <div class="border-2 mx-2 flex justify-center items-center flex-col bg-kn_white rounded-2xl p-2 my-4">
       <h3 class="text-2xl mb-2">{title}</h3>
-      <div class="flex m-2 items-center">
+      <div class="flex m-2 items-end">
         <p class="text-4xl">{total}</p>
+        <p class="text-xl">{unit}</p>
         {/* プラス・マイナス表示(マイナスなら自動でつくので不要) */}
-        <p class="text-2xl">
+        <p class="text-xl">
           ({change >= 0 ? "+" : ""}
           {change})
         </p>
-        <p class="text-3xl">{unit}</p>
       </div>
     </div>
   );
