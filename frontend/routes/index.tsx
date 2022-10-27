@@ -1,5 +1,5 @@
 import Layout from "@🌟/BasicLayout.tsx";
-import KadodeLogoAnimation from "@🐣/Animation/KadodeLogoAnimation.tsx";
+import KadodeLogoAnimation from "@🧩/Animation/KadodeLogoAnimation.tsx";
 export default function Home() {
   return (
     <Layout title="top">
