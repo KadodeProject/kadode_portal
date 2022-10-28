@@ -5,7 +5,7 @@ export interface OperationCoreE {
   statistic_per_date_total: number;
 }
 
-export interface KadodeDiaryDayChange {
+export interface KadodeDiaryDailyChange {
   user_change: number;
   diary_change: number;
   statistic_per_date_change: number;
