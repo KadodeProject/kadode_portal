@@ -3,19 +3,39 @@ export default function Footer() {
     <footer>
       <p class="text-xs mt-2 mb-2">copyright 2022 usuyuki</p>
       <div class="flex justify-center  items-center flex-col md:flex-row">
-        <a class="px-2 py-2" href="https://kado.day">
+        <a
+          class="px-2 py-2"
+          href="https://kado.day"
+          target="_blank"
+          rel="noopener"
+        >
           かどで日記
         </a>
-        <a class="px-2 py-2" href="https://wiki.kado.day">
+        <a
+          class="px-2 py-2"
+          href="https://wiki.kado.day"
+          target="_blank"
+          rel="noopener"
+        >
           かどで日記総合wiki
         </a>
         <a class="px-2 py-2" href="/">
           かどでポータル
         </a>
-        <a class="px-2 py-2" href="https://github.com/KadodeProject">
+        <a
+          class="px-2 py-2"
+          href="https://github.com/KadodeProject"
+          target="_blank"
+          rel="noopener"
+        >
           かどで日記GitHub
         </a>
-        <a class="px-2 py-2" href="https://note.com/kadoday">
+        <a
+          class="px-2 py-2"
+          href="https://note.com/kadoday"
+          target="_blank"
+          rel="noopener"
+        >
           かどで日記公式note
         </a>
       </div>

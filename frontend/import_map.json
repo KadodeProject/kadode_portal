@@ -1,7 +1,7 @@
 {
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.1.1/",
-    "$fresh_charts/": "https://deno.land/x/fresh_charts/",
+    "$fresh_charts/": "https://deno.land/x/fresh_charts@0.1.0/",
     "$std/": "https://deno.land/std@0.161.0/",
     "preact": "https://esm.sh/preact@10.11.0",
     "preact/": "https://esm.sh/preact@10.11.0/",

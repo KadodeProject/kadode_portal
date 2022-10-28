@@ -1,23 +1,37 @@
-import Layout from "@🌟/BasicLayout.tsx";
+// コア
 import KadodeLogoAnimation from "@🧩/Animation/KadodeLogoAnimation.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
+// メソッド
 import {
-  getDayChange,
-  getDayT,
-} from "@💿/OperationCoreTransition/GetDayChange.ts";
+  getDailyChange,
+  getDailyT,
+} from "@💿/OperationCoreTransition/GetDailyChange.ts";
+import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
+import { LineGraphT } from "@🍚/graphT.ts";
+// みため
+import Layout from "@🌟/BasicLayout.tsx";
 import UserChangeCard from "@🧩/Card/UserChangeCard.tsx";
+import ListChart from "@🧩/Graph/ListChart.tsx";
 
-export const handler: Handlers<getDayT> = {
+type forIndexData = {
+  daily: getDailyT;
+  monthlyChart: LineGraphT;
+};
+
+export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
-    const data = await getDayChange<getDayT>();
-    return ctx.render(data);
+    const dailyData = await getDailyChange<getDailyT>();
+    const monthlyData = await CreateMonthlyGraphData<LineGraphT>();
+    return ctx.render({
+      daily: dailyData,
+      monthlyChart: monthlyData,
+    });
   },
 };
 
-export default function Home({ data }: PageProps<getDayT>) {
-  const all = data.all;
-  const total = data.total;
-  const last1Day = data.last1Day;
+export default function Home({ data }: PageProps<forIndexData>) {
+  const total = data.daily.total;
+  const last1Day = data.daily.last1Day;
   return (
     <Layout title="top">
       <div class="p-4 mx-auto max-w-screen-md">
@@ -49,6 +63,10 @@ export default function Home({ data }: PageProps<getDayT>) {
               unit="個"
             />
           </div>
+        </div>
+        <div class="graphSection">
+          <h2 class="m-4 text-3xl text-center">利用状況の推移</h2>
+          <ListChart graphData={data.monthlyChart} />
         </div>
       </div>
     </Layout>

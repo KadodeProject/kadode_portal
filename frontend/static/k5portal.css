@@ -76,3 +76,32 @@ main {
     100vh - var(--main-padding-top) - var(--heder-height) - var(--footer-height)
   );
 }
+
+/* Chart.js用 */
+.chartWrapper svg g {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 700px !important;
+  height: 700px !important;
+}
+/* 背景色を消し飛ばす */
+.chartWrapper svg g[fill="white"] {
+  fill: rgba(0, 0, 0, 0) !important;
+}
+@media screen and (max-width: 640px) {
+  /* スマホの時 */
+  .chartWrapper svg {
+    width: 90vw;
+    height: 90vw;
+  }
+  .chartWrapper svg g {
+    width: 90vw !important;
+    height: 90vw !important;
+  }
+  .graphSection {
+    /* 現代技術(fresh版chart.jsのsvg描画仕様)では満足なレスポンス対応ができないため、スマホでは諦める */
+    /* 一応見れなくもないレベルまでは治したけど、中途半端にデザイン崩すので見せないほうがマシという判断 */
+    display: none;
+  }
+}
