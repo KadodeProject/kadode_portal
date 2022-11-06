@@ -1,5 +1,5 @@
 // コア
-import KadodeLogoAnimation from "@🗃/Animation/KadodeLogoAnimation.tsx";
+import KadodeLogoAnimation from "@🧩/Animation/KadodeLogoAnimation.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 // メソッド
 import {
@@ -7,13 +7,9 @@ import {
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
 import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
-import { GetArticlesByKadodeNote } from "@💿/Note/GetArticlesByKadodeNote.ts";
-import { GetLatestOsirases } from "@💿/Osirase/GetLatestOsirases.ts";
-import { GetLatestReleaseNotes } from "@💿/ReleaseNote/GetLatestReleaseNotes.ts";
-//型
-import { lineChartT } from "@🧩/fresh_chartsT.ts";
-import { tPArticleT } from "@🧩/article.ts";
+import { LineGraphT } from "@🍚/graphT.ts";
 // みため
+import KadodeLogoAnimation from "@🧩/Animation/KadodeLogoAnimation.tsx";
 import Layout from "@🌟/BasicLayout.tsx";
 //カード
 import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
