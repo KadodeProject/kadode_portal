@@ -29,13 +29,13 @@ export async function CreateOperationCoreChartDataToD3nodata(): Promise<
     const date = new Date(e.created_at);
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return {x:e.diary_total,y:`${month}/${day}`};
+    return {y:e.diary_total,x:`${month}/${day}`};
   });
   const statisticList: d3nodataDataT[] = monthlyData.map((e) => {
     const date = new Date(e.created_at);
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return {x:e.statistic_per_date_total,y:`${month}/${day}`};
+    return {y:e.statistic_per_date_total,x:`${month}/${day}`};
   });
   return [
     {

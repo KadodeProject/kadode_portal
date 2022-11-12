@@ -12,7 +12,7 @@ import { BarChartT } from "@🧩/d3nodata.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
 import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
-import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
+import D3nodataBarChart from "@🏝/D3nodataBarChart.tsx";
 
 type forIndexData = {
   daily: getDailyT;
@@ -68,7 +68,7 @@ export default function Home({ data }: PageProps<forIndexData>) {
         </div>
         <div class="graphSection">
           <h2 class="m-4 text-3xl text-center">利用状況の推移</h2>
-          <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} />
+          <D3nodataBarChart chartData={data.diaryStatisticMonthlyData} />
         </div>
       </div>
     </Layout>
