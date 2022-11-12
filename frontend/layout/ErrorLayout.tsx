@@ -1,5 +1,5 @@
 import Layout from "@🌟/BasicLayout.tsx";
-import ErrorCard from "@🧩/Card/ErrorCard.tsx";
+import ErrorCard from "@🗃/Card/ErrorCard.tsx";
 interface ErrorMessages {
   statusCode: number;
   title: string;

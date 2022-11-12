@@ -1,14 +1,14 @@
 🏝islands:
-  - frontend/islands
-🍚types:
-  - frontend/types
+  - frontend/islands/*
+🧩types:
+  - frontend/types/*
 💿libs:
-  - frontend/libs
-🧩components:
-  - frontend/components
-  - frontend/layouts
-👗satic:
-  - frontend/static
+  - frontend/libs/*
+🗃components:
+  - frontend/components/*
+  - frontend/layouts/*
+👗static:
+  - frontend/static/*
 🏠localInfra:
   - docker-compose.yml
   - infra/dev/*

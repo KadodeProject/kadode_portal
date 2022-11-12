@@ -2,6 +2,7 @@
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.1.1/",
     "$fresh_charts/": "https://deno.land/x/fresh_charts@0.1.0/",
+    "$d3nodata": "https://deno.land/x/d3nodata@v0.1.3.1/charts.ts",
     "$std/": "https://deno.land/std@0.161.0/",
     "preact": "https://esm.sh/preact@10.11.0",
     "preact/": "https://esm.sh/preact@10.11.0/",
@@ -10,9 +11,9 @@
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
-    "@🧩/": "./components/",
+    "@🗃/": "./components/",
     "@🌟/": "./layout/",
-    "@🍚/": "./types/",
+    "@🧩/": "./types/",
     "@💿/": "./libs/",
     "@🏝/": "./islands/"
   }
