@@ -1,4 +1,4 @@
-import { KadodeDiaryDailyChange, OperationCoreE } from "@🍚/kadodeApiT.ts";
+import { KadodeDiaryDailyChange, OperationCoreE } from "@🧩/kadodeApiT.ts";
 const DAY_ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/day";
 

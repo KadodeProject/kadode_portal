@@ -1,5 +1,5 @@
-import { OperationCoreE } from "@🍚/kadodeApiT.ts";
-import { LineGraphT } from "@🍚/graphT.ts";
+import { OperationCoreE } from "@🧩/kadodeApiT.ts";
+import { LineGraphT } from "@🧩/graphT.ts";
 
 const MONTH_ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/month";

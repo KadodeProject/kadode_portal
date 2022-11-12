@@ -1,30 +1,32 @@
 // コア
-import KadodeLogoAnimation from "@🧩/Animation/KadodeLogoAnimation.tsx";
+import KadodeLogoAnimation from "@🗃/Animation/KadodeLogoAnimation.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 // メソッド
 import {
   getDailyChange,
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
-import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
-import { LineGraphT } from "@🍚/graphT.ts";
+import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
+//型
+import { BarChartT } from "@🧩/d3nodata.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
-import UserChangeCard from "@🧩/Card/UserChangeCard.tsx";
-import ListChart from "@🧩/Graph/ListChart.tsx";
+import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
+import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
 
 type forIndexData = {
   daily: getDailyT;
-  monthlyChart: LineGraphT;
+  monthlyChart: BarChartT[];
 };
 
 export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
     const dailyData = await getDailyChange<getDailyT>();
-    const monthlyData = await CreateMonthlyGraphData<LineGraphT>();
+    const diaryStatisticMonthlyData =
+      await CreateOperationCoreChartDataToD3nodata<BarChartT[]>();
     return ctx.render({
       daily: dailyData,
-      monthlyChart: monthlyData,
+      diaryStatisticMonthlyData: diaryStatisticMonthlyData,
     });
   },
 };
@@ -66,7 +68,7 @@ export default function Home({ data }: PageProps<forIndexData>) {
         </div>
         <div class="graphSection">
           <h2 class="m-4 text-3xl text-center">利用状況の推移</h2>
-          <ListChart graphData={data.monthlyChart} />
+          <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} />
         </div>
       </div>
     </Layout>
