@@ -17,7 +17,7 @@ export default {
       kn_s_2: "#339c76",
       kn_s_3: "#e2534a",
       kn_a_yellow: "#id7bd57",
-      knn_a_light_blue: "#d8e4ee",
+      kn_a_light_blue: "#d8e4ee",
       kn_a_green: "#7e9e7f",
     },
   },
