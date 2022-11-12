@@ -1,11 +1,11 @@
 import { OperationCoreE } from "@🧩/kadodeApiT.ts";
-import { BarChartT,d3nodataDataT } from "@🧩/d3nodata.ts";
+import { LineChartT,d3nodataDataT } from "@🧩/d3nodata.ts";
 
 const MONTH_ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/month";
 
 export async function CreateOperationCoreChartDataToD3nodata(): Promise<
-  BarChartT[]
+  LineChartT[]
 > {
   const resp = await fetch(MONTH_ENDPOINT, {
     method: "GET",
@@ -27,15 +27,17 @@ export async function CreateOperationCoreChartDataToD3nodata(): Promise<
   /* @todo 2回日付を作ってて無駄が多いので省きたい */
   const diaryList: d3nodataDataT[] = monthlyData.map((e) => {
     const date = new Date(e.created_at);
+    const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return {x:e.diary_total,y:`${month}/${day}`};
+    return {y:e.diary_total,x:`${year}/${month}/${day}`};
   });
   const statisticList: d3nodataDataT[] = monthlyData.map((e) => {
     const date = new Date(e.created_at);
+    const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return {x:e.statistic_per_date_total,y:`${month}/${day}`};
+    return {y:e.statistic_per_date_total,x:`${year}/${month}/${day}`};
   });
   return [
     {

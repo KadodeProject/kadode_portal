@@ -8,7 +8,7 @@ import {
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
 import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
 //型
-import { BarChartT } from "@🧩/d3nodata.ts";
+import { LineChartT } from "@🧩/d3nodata.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
 import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
@@ -16,14 +16,14 @@ import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
 
 type forIndexData = {
   daily: getDailyT;
-  monthlyChart: BarChartT[];
+  monthlyChart: LineChartT[];
 };
 
 export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
     const dailyData = await getDailyChange<getDailyT>();
     const diaryStatisticMonthlyData =
-      await CreateOperationCoreChartDataToD3nodata<BarChartT[]>();
+      await CreateOperationCoreChartDataToD3nodata<LineChartT[]>();
     return ctx.render({
       daily: dailyData,
       diaryStatisticMonthlyData: diaryStatisticMonthlyData,
