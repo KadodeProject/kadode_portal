@@ -1,5 +1,5 @@
 import { KadodeDiaryDailyChange, OperationCoreE } from "@🧩/kadodeApiT.ts";
-const DAY_ENDPOINT = Deno.env.get("API_URL") +
+const ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/day";
 
 export type getDailyT = {
@@ -8,7 +8,7 @@ export type getDailyT = {
   last1Day: KadodeDiaryDailyChange;
 };
 export async function GetDailyChange(): Promise<getDailyT> {
-  const resp = await fetch(DAY_ENDPOINT, {
+  const resp = await fetch(ENDPOINT, {
     method: "GET",
   });
   if (!resp.ok) {

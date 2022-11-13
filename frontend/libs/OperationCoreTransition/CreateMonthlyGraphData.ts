@@ -1,11 +1,11 @@
 import { OperationCoreE } from "@🧩/kadodeApiT.ts";
 import { LineGraphT } from "@🧩/graphT.ts";
 
-const MONTH_ENDPOINT = Deno.env.get("API_URL") +
+const ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/month";
 
 export async function CreateMonthlyGraphData(): Promise<LineGraphT> {
-  const resp = await fetch(MONTH_ENDPOINT, {
+  const resp = await fetch(ENDPOINT, {
     method: "GET",
   });
   if (!resp.ok) {

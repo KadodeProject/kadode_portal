@@ -6,7 +6,7 @@
   - frontend/libs/*
 🗃components:
   - frontend/components/*
-  - frontend/layouts/*
+  - frontend/layout/*
 👗static:
   - frontend/static/*
 🏠localInfra:

@@ -1,4 +1,8 @@
 {
-  "cSpell.words": ["kadode"],
+  "cSpell.words": [
+    "kadode",
+    "Osirase",
+    "Osirases"
+  ],
   "editor.defaultFormatter": "denoland.vscode-deno"
 }

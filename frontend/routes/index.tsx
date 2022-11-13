@@ -7,6 +7,8 @@ import {
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
 import { GetArticlesByKadodeNote } from "@💿/Note/GetArticlesByKadodeNote.ts";
+import { GetLatestOsirases } from "@💿/Osirase/GetLatestOsirases.ts";
+import { GetLatestReleaseNotes } from "@💿/ReleaseNote/GetLatestReleaseNotes.ts";
 import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
 //型
 import { lineChartT } from "@🧩/d3nodata.ts";
@@ -19,7 +21,8 @@ import ProductIntroCard from "@🗃/Card/ProductIntroCard.tsx";
 import ExternalServiceIntroCard from "@🗃/Card/ExternalServiceIntroCard.tsx";
 //フレーム
 import IndexArticleFrame from "@🗃/Frame/IndexArticleFrame.tsx";
-
+//文字
+import IndexHeadline from "@🗃/Text/IndexHeadline.tsx";
 //グラフ
 import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
 
@@ -27,6 +30,8 @@ type forIndexData = {
   daily: getDailyT;
   monthlyChart: lineChartT[];
   noteArticles: tPArticleT[];
+  latestOsirases: tPArticleT[];
+  latestReleaseNotes: tPArticleT[];
 };
 
 export const handler: Handlers<forIndexData> = {
@@ -35,10 +40,14 @@ export const handler: Handlers<forIndexData> = {
     const diaryStatisticMonthlyData =
       await CreateOperationCoreChartDataToD3nodata<lineChartT[]>();
     const noteArticles = await GetArticlesByKadodeNote<tPArticleT[]>();
+    const latestOsirases = await GetLatestOsirases<tPArticleT[]>();
+    const latestReleaseNotes = await GetLatestReleaseNotes<tPArticleT[]>();
     return ctx.render({
       daily: dailyData,
       diaryStatisticMonthlyData: diaryStatisticMonthlyData,
       noteArticles: noteArticles,
+      latestOsirases: latestOsirases,
+      latestReleaseNotes: latestReleaseNotes,
     });
   },
 };
@@ -48,7 +57,7 @@ export default function Home({ data }: PageProps<forIndexData>) {
   const last1Day = data.daily.last1Day;
   return (
     <Layout title="top">
-      <div class="p-4 mx-auto max-w-screen-md">
+      <div class="p-4 mx-auto">
         <h1 class="bg-kn_white text-3xl text-center ">かどでプロジェクト</h1>
         <KadodeLogoAnimation />
         <p class="bg-kn_white text-center text-2xl my-2">
@@ -78,11 +87,22 @@ export default function Home({ data }: PageProps<forIndexData>) {
             />
           </div>
         </div>
+        <IndexHeadline title="📈利用状況の推移" />
         <div class="graphSection">
-          <h2 class="m-4 text-3xl text-center mt-12">📈利用状況の推移</h2>
           <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} />
         </div>
-        <h2 class="m-4 text-3xl text-center mb-8">🍸こんなことやってます！</h2>
+        <IndexHeadline title="🦅情報" />
+        <div class="flex justify-center flex-wrap">
+          <div class="md:w-1/2">
+            <h3 class="text-2xl text-center mt-4">お知らせ</h3>
+            <IndexArticleFrame articlesData={data.latestOsirases} />
+          </div>
+          <div class="md:w-1/2">
+            <h3 class="text-2xl text-center mt-4">リリースノート</h3>
+            <IndexArticleFrame articlesData={data.latestReleaseNotes} />
+          </div>
+        </div>
+        <IndexHeadline title="🍸こんなことやってます！" />
         <ProductIntroCard
           title="かどで日記"
           url="https://kado.day"
@@ -111,7 +131,9 @@ export default function Home({ data }: PageProps<forIndexData>) {
           description="かどで日記の情報を電子ペーパーで表示する！"
           img_url="img/productImage/paper/paper1.jpg"
         /> */}
-        <h2 class="m-4 text-3xl text-center mb-8 mt-24">🍹よければこちらも</h2>
+        <IndexHeadline title="🍹よければこちらも" />
+        <h3 class="text-2xl text-center mt-4">note最新記事</h3>
+        <IndexArticleFrame articlesData={data.noteArticles} />
         <div class="flex justify-center flex-wrap">
           <ExternalServiceIntroCard
             title="かどでプロジェクト公式note"
@@ -123,13 +145,6 @@ export default function Home({ data }: PageProps<forIndexData>) {
             url="https://github.com/KadodeProject"
             imgUrl="img/logo/github/GitHub-Mark-120px-plus.png"
           />
-        </div>
-      </div>
-      <h2 class="m-4 text-3xl text-center mb-8 mt-24">🦅情報</h2>
-      <div class="flex justify-center flex-wrap">
-        <div class="md:w-1/2">
-          <h3 class="text-2xl text-center mt-4">noteより</h3>
-          <IndexArticleFrame articlesData={data.noteArticles} />
         </div>
       </div>
     </Layout>

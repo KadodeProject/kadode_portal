@@ -1,13 +1,13 @@
 import { OperationCoreE } from "@🧩/kadodeApiT.ts";
 import { lineChartT,d3nodataDataT } from "@🧩/d3nodata.ts";
 
-const MONTH_ENDPOINT = Deno.env.get("API_URL") +
+const ENDPOINT = Deno.env.get("API_URL") +
   "/OperationCoreTransitionPerHours/relative/month";
 
 export async function CreateOperationCoreChartDataToD3nodata(): Promise<
   lineChartT[]
 > {
-  const resp = await fetch(MONTH_ENDPOINT, {
+  const resp = await fetch(ENDPOINT, {
     method: "GET",
   });
   if (!resp.ok) {
