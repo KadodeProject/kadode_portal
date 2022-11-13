@@ -63,7 +63,7 @@ export default function Home({ data }: PageProps<forIndexData>) {
   const total = data.daily.total;
   const last1Day = data.daily.last1Day;
   return (
-    <Layout title="top">
+    <Layout>
       <div class="p-4 mx-auto">
         <h1 class="bg-kn_white text-3xl text-center ">かどでプロジェクト</h1>
         <KadodeLogoAnimation />
