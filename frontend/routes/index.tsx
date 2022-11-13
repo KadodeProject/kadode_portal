@@ -3,32 +3,42 @@ import KadodeLogoAnimation from "@🗃/Animation/KadodeLogoAnimation.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 // メソッド
 import {
-  getDailyChange,
+  GetDailyChange,
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
+import { GetArticlesByKadodeNote } from "@💿/Note/GetArticlesByKadodeNote.ts";
 import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
 //型
-import { LineChartT } from "@🧩/d3nodata.ts";
+import { lineChartT } from "@🧩/d3nodata.ts";
+import { tPArticleT } from "@🧩/article.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
+//カード
 import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
 import ProductIntroCard from "@🗃/Card/ProductIntroCard.tsx";
 import ExternalServiceIntroCard from "@🗃/Card/ExternalServiceIntroCard.tsx";
+//フレーム
+import IndexArticleFrame from "@🗃/Frame/IndexArticleFrame.tsx";
+
+//グラフ
 import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
 
 type forIndexData = {
   daily: getDailyT;
-  monthlyChart: LineChartT[];
+  monthlyChart: lineChartT[];
+  noteArticles: tPArticleT[];
 };
 
 export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
-    const dailyData = await getDailyChange<getDailyT>();
+    const dailyData = await GetDailyChange<getDailyT>();
     const diaryStatisticMonthlyData =
-      await CreateOperationCoreChartDataToD3nodata<LineChartT[]>();
+      await CreateOperationCoreChartDataToD3nodata<lineChartT[]>();
+    const noteArticles = await GetArticlesByKadodeNote<tPArticleT[]>();
     return ctx.render({
       daily: dailyData,
       diaryStatisticMonthlyData: diaryStatisticMonthlyData,
+      noteArticles: noteArticles,
     });
   },
 };
@@ -49,19 +59,19 @@ export default function Home({ data }: PageProps<forIndexData>) {
           <p class="text-center mx-2 my-2 ">※かっこ内は過去24時間の変化</p>
           <div class="flex justify-around items-center flex-wrap p-4">
             <UserChangeCard
-              title="ユーザー数の変化"
+              title="ユーザー"
               total={total.user_total}
               change={last1Day.user_change}
               unit="人"
             />
             <UserChangeCard
-              title="日記数の変化"
+              title="日記"
               total={total.diary_total}
               change={last1Day.diary_change}
               unit="日記"
             />
             <UserChangeCard
-              title="統計数の変化"
+              title="統計"
               total={total.statistic_per_date_total}
               change={last1Day.statistic_per_date_change}
               unit="個"
@@ -69,10 +79,10 @@ export default function Home({ data }: PageProps<forIndexData>) {
           </div>
         </div>
         <div class="graphSection">
-          <h2 class="m-4 text-3xl text-center">利用状況の推移</h2>
+          <h2 class="m-4 text-3xl text-center mt-12">📈利用状況の推移</h2>
           <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} />
         </div>
-        <h2 class="m-4 text-3xl text-center mb-8">こんなことやってます！</h2>
+        <h2 class="m-4 text-3xl text-center mb-8">🍸こんなことやってます！</h2>
         <ProductIntroCard
           title="かどで日記"
           url="https://kado.day"
@@ -101,18 +111,25 @@ export default function Home({ data }: PageProps<forIndexData>) {
           description="かどで日記の情報を電子ペーパーで表示する！"
           img_url="img/productImage/paper/paper1.jpg"
         /> */}
-        <h2 class="m-4 text-3xl text-center mb-8 mt-24">よければこちらも</h2>
+        <h2 class="m-4 text-3xl text-center mb-8 mt-24">🍹よければこちらも</h2>
         <div class="flex justify-center flex-wrap">
           <ExternalServiceIntroCard
             title="かどでプロジェクト公式note"
             url="https://note.com/kadoday"
-            img_url="img/logo/note/logo_symbol.png"
+            imgUrl="img/logo/note/logo_symbol.png"
           />
           <ExternalServiceIntroCard
             title="かどでプロジェクトGitHub"
             url="https://github.com/KadodeProject"
-            img_url="img/logo/github/GitHub-Mark-120px-plus.png"
+            imgUrl="img/logo/github/GitHub-Mark-120px-plus.png"
           />
+        </div>
+      </div>
+      <h2 class="m-4 text-3xl text-center mb-8 mt-24">🦅情報</h2>
+      <div class="flex justify-center flex-wrap">
+        <div class="md:w-1/2">
+          <h3 class="text-2xl text-center mt-4">noteより</h3>
+          <IndexArticleFrame articlesData={data.noteArticles} />
         </div>
       </div>
     </Layout>

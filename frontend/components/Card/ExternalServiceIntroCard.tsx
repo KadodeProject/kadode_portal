@@ -1,13 +1,13 @@
 interface ExternalServiceIntroCardT {
   title: string;
   url: string;
-  img_url: string;
+  imgUrl: string;
 }
 
 export default function ExternalServiceIntroCard({
   title,
   url,
-  img_url,
+  imgUrl,
 }: ExternalServiceIntroCardT) {
   return (
     <div class="mx-2 my-2">
@@ -17,7 +17,7 @@ export default function ExternalServiceIntroCard({
         target="_blank"
         rel="noopener"
       >
-        <img class="w-12 h-12" src={img_url} />
+        <img class="w-12 h-12" src={imgUrl} />
         <p class="ml-2 text-xl">{title}</p>
       </a>
     </div>

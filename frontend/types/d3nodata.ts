@@ -1,4 +1,4 @@
-export interface LineChartT {
+export interface lineChartT {
   label: string;
   color: string;
   data: d3nodataDataT[];

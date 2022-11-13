@@ -7,7 +7,7 @@ export type getDailyT = {
   total: OperationCoreE;
   last1Day: KadodeDiaryDailyChange;
 };
-export async function getDailyChange(): Promise<getDailyT> {
+export async function GetDailyChange(): Promise<getDailyT> {
   const resp = await fetch(DAY_ENDPOINT, {
     method: "GET",
   });
