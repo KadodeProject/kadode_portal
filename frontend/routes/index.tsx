@@ -6,12 +6,12 @@ import {
   GetDailyChange,
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
+import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
 import { GetArticlesByKadodeNote } from "@💿/Note/GetArticlesByKadodeNote.ts";
 import { GetLatestOsirases } from "@💿/Osirase/GetLatestOsirases.ts";
 import { GetLatestReleaseNotes } from "@💿/ReleaseNote/GetLatestReleaseNotes.ts";
-import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
 //型
-import { lineChartT } from "@🧩/d3nodata.ts";
+import { lineGraphT } from "@🧩/graphT.ts";
 import { tPArticleT } from "@🧩/article.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
@@ -24,11 +24,15 @@ import IndexArticleFrame from "@🗃/Frame/IndexArticleFrame.tsx";
 //文字
 import IndexHeadline from "@🗃/Text/IndexHeadline.tsx";
 //グラフ
-import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
+import ListChart from "@🗃/Graph/ListChart.tsx";
+
+// import { lineChartT } from "@🧩/d3nodata.ts";
+// import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
+// import { CreateOperationCoreChartDataToD3nodata } from "@💿/OperationCoreTransition/CreateOperationCoreChartDataToD3nodata.ts";
 
 type forIndexData = {
   daily: getDailyT;
-  monthlyChart: lineChartT[];
+  monthlyChart: lineGraphT[];
   noteArticles: tPArticleT[];
   latestOsirases: tPArticleT[];
   latestReleaseNotes: tPArticleT[];
@@ -37,8 +41,11 @@ type forIndexData = {
 export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
     const dailyData = await GetDailyChange<getDailyT>();
-    const diaryStatisticMonthlyData =
-      await CreateOperationCoreChartDataToD3nodata<lineChartT[]>();
+    const diaryStatisticMonthlyData = await CreateMonthlyGraphData<
+      lineGraphT[]
+    >();
+    // const diaryStatisticMonthlyData =
+    //   await CreateOperationCoreChartDataToD3nodata<lineChartT[]>();
     const noteArticles = await GetArticlesByKadodeNote<tPArticleT[]>();
     const latestOsirases = await GetLatestOsirases<tPArticleT[]>();
     const latestReleaseNotes = await GetLatestReleaseNotes<tPArticleT[]>();
@@ -89,7 +96,9 @@ export default function Home({ data }: PageProps<forIndexData>) {
         </div>
         <IndexHeadline title="📈利用状況の推移" />
         <div class="graphSection">
-          <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} />
+          {/* 下記はあまりにも重たすぎて表示が3秒程度遅れるのでバージョンが落ち着くまで保留(アニメーションはとても綺麗) */}
+          <ListChart graphData={data.diaryStatisticMonthlyData} />
+          {/* <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} /> */}
         </div>
         <IndexHeadline title="🦅情報" />
         <div class="flex justify-center flex-wrap">
