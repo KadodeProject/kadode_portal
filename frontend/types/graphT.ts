@@ -1,16 +1,16 @@
-export interface LineGraphT {
+export interface lineGraphT {
   xList: string[] | number[];
-  dataList: LineGraphDataListT[];
-  option?: GraphOptionT;
+  dataList: lineGraphDataListT[];
+  option?: graphOptionT;
 }
 
-interface LineGraphDataListT {
+interface lineGraphDataListT {
   label: string;
   data: number[];
   borderColor: string;
   backgroundColor: string;
 }
-interface GraphOptionT {
+interface graphOptionT {
   yMax?: number;
   yMin?: number;
 }

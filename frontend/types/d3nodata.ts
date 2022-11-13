@@ -1,3 +1,4 @@
+/** listでなくlineで正しい(ライブラリの名前に追従) */
 export interface lineChartT {
   label: string;
   color: string;
