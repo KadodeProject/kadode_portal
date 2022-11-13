@@ -1,8 +1,8 @@
 import { Chart } from "$fresh_charts/mod.ts";
 import { transparentize } from "$fresh_charts/utils.ts";
-import { lineGraphT } from "@🧩/graphT.ts";
+import { lineChartT } from "@🧩/fresh_chartsT.ts";
 
-export default function ListChart({ graphData }: lineGraphT) {
+export default function LineChart({ graphData }: lineChartT) {
   const dataset = graphData.dataList.map((data, index) => ({
     label: data.label,
     data: data.data,

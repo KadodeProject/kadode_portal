@@ -2,8 +2,8 @@
   - frontend/islands/*
 🧩types:
   - frontend/types/*
-💿libs:
-  - frontend/libs/*
+💿usecases:
+  - frontend/usecases/*
 🗃components:
   - frontend/components/*
   - frontend/layout/*

@@ -1,10 +1,10 @@
-export interface lineGraphT {
+export interface lineChartT {
   xList: string[] | number[];
-  dataList: lineGraphDataListT[];
+  dataList: lineChartDataListT[];
   option?: graphOptionT;
 }
 
-interface lineGraphDataListT {
+interface lineChartDataListT {
   label: string;
   data: number[];
   borderColor: string;
