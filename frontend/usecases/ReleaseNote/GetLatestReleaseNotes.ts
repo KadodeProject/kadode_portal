@@ -1,8 +1,8 @@
 import {tPArticleT} from "@🧩/article.ts";
 const ENDPOINT = Deno.env.get("API_URL") +
-  "/Osirase/latest";
+  "/ReleaseNote/latest";
   
-export async function GetLatestOsirases(): Promise<tPArticleT[]> {
+export async function GetLatestReleaseNotes(): Promise<tPArticleT[]> {
   const resp = await fetch(ENDPOINT, {
     method: "GET",
   });
@@ -16,10 +16,10 @@ export async function GetLatestOsirases(): Promise<tPArticleT[]> {
   }
   /** タイトルとURLを取り出す */
   return jsonData.map((e: any) => {
-    const date=e.created_at;
         return {
             title: e.title,
             url: e.url,
+            // LaravelのEloquentがタイムゾーンを消し飛ばすのでフロント側で書き替え(こんなことやりたくない)
             date: new Date(e.date.replace("Z", "+09:00")),
             // body:e.body,
             
