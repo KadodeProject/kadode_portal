@@ -11,7 +11,7 @@ import { GetArticlesByKadodeNote } from "@💿/Note/GetArticlesByKadodeNote.ts";
 import { GetLatestOsirases } from "@💿/Osirase/GetLatestOsirases.ts";
 import { GetLatestReleaseNotes } from "@💿/ReleaseNote/GetLatestReleaseNotes.ts";
 //型
-import { lineGraphT } from "@🧩/graphT.ts";
+import { lineChartT } from "@🧩/fresh_chartsT.ts";
 import { tPArticleT } from "@🧩/article.ts";
 // みため
 import Layout from "@🌟/BasicLayout.tsx";
@@ -24,7 +24,7 @@ import IndexArticleFrame from "@🗃/Frame/IndexArticleFrame.tsx";
 //文字
 import IndexHeadline from "@🗃/Text/IndexHeadline.tsx";
 //グラフ
-import ListChart from "@🗃/Graph/ListChart.tsx";
+import LineChart from "@🗃/Graph/fresh_charts/LineChart.tsx";
 
 // import { lineChartT } from "@🧩/d3nodata.ts";
 // import D3nodataLineChart from "@🏝/D3nodataLineChart.tsx";
@@ -32,7 +32,7 @@ import ListChart from "@🗃/Graph/ListChart.tsx";
 
 type forIndexData = {
   daily: getDailyT;
-  monthlyChart: lineGraphT[];
+  monthlyChart: lineChartT[];
   noteArticles: tPArticleT[];
   latestOsirases: tPArticleT[];
   latestReleaseNotes: tPArticleT[];
@@ -42,7 +42,7 @@ export const handler: Handlers<forIndexData> = {
   async GET(_req, ctx) {
     const dailyData = await GetDailyChange<getDailyT>();
     const diaryStatisticMonthlyData = await CreateMonthlyGraphData<
-      lineGraphT[]
+      lineChartT[]
     >();
     // const diaryStatisticMonthlyData =
     //   await CreateOperationCoreChartDataToD3nodata<lineChartT[]>();
@@ -97,7 +97,7 @@ export default function Home({ data }: PageProps<forIndexData>) {
         <IndexHeadline title="📈利用状況の推移" />
         <div class="graphSection">
           {/* 下記はあまりにも重たすぎて表示が3秒程度遅れるのでバージョンが落ち着くまで保留(アニメーションはとても綺麗) */}
-          <ListChart graphData={data.diaryStatisticMonthlyData} />
+          <LineChart graphData={data.diaryStatisticMonthlyData} />
           {/* <D3nodataLineChart chartData={data.diaryStatisticMonthlyData} /> */}
         </div>
         <IndexHeadline title="🦅情報" />
