@@ -5,3 +5,11 @@ main {
   border: 1px solid blue;
   overflow: hidden;
 }
+
+.chartWrapper svg {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 90% !important;
+  height: 90% !important;
+}

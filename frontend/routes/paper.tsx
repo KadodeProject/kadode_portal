@@ -2,29 +2,48 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 // メソッド
 import {
-  getDailyChange,
+  GetDailyChange,
   getDailyT,
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
 import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
+import { CreateDailyGraphData } from "@💿/MachineResource/CreateDailyGraphData.ts";
 //型
-import { LineGraphT } from "@🍚/graphT.ts";
+import { lineGraphT } from "@🧩/fresh_chartsT.ts";
 // みため
 import Layout from "@🌟/M5PaperLayout.tsx";
-import ResponseTimeWrapper from "@🧩/Paper/Characters/ResponseTimeWrapper.tsx";
-import OperationCoreInfoWrapper from "@🧩/Paper/Characters/OperationCoreInfoWrapper.tsx";
+import ResponseTimeWrapper from "@🗃/Paper/Characters/ResponseTimeWrapper.tsx";
+import OperationCoreInfoWrapper from "@🗃/Paper/Characters/OperationCoreInfoWrapper.tsx";
+//グラフ
+import LineChart from "@🗃/Graph/fresh_charts/LineChart.tsx";
 
-type forIndexData = {
-  daily: getDailyT;
-  monthlyChart: LineGraphT;
+type forRenderData = {
+  octData: octData;
+  mrData: mrData;
 };
 
-export const handler: Handlers<forIndexData> = {
+/** MachineResource系のデータ */
+type mrData = {
+  dailyChart: lineGraphT[];
+};
+/** OperationCoreTransition系のデータ */
+type octData = {
+  daily: getDailyT;
+  monthlyChart: lineGraphT[];
+};
+
+export const handler: Handlers<forRenderData> = {
   async GET(_req, ctx) {
-    const dailyData = await getDailyChange<getDailyT>();
-    const monthlyData = await CreateMonthlyGraphData<LineGraphT>();
+    const octDailyData = await GetDailyChange<getDailyT>();
+    const octMonthlyData = await CreateMonthlyGraphData<lineGraphT[]>();
+    const mrDailyData = await await CreateDailyGraphData<lineGraphT[]>();
     return ctx.render({
-      daily: dailyData,
-      monthlyChart: monthlyData,
+      octData: {
+        daily: octDailyData,
+        monthlyChart: octMonthlyData,
+      },
+      mrData: {
+        dailyChart: mrDailyData,
+      },
     });
   },
 };
@@ -34,9 +53,9 @@ export const handler: Handlers<forIndexData> = {
  * かどでペーパー用なので、960px x 540px の描画しか存在せず、決め打ちで設定してよい
  * 色もグレースケールになるため細かい組み合わせは不要(意味がない)
  */
-export default function Paper({ data }: PageProps<forIndexData>) {
-  const total = data.daily.total;
-  const last1Day = data.daily.last1Day;
+export default function Paper({ data }: PageProps<forRenderData>) {
+  const total = data.octData.daily.total;
+  const last1Day = data.octData.daily.last1Day;
   const date = new Date();
   const currentTime =
     date.getFullYear() +
@@ -86,11 +105,17 @@ export default function Paper({ data }: PageProps<forIndexData>) {
               <OperationCoreInfoWrapper title="日記" unit="個" number={0} />
               <OperationCoreInfoWrapper title="統計" unit="個" number={0} />
             </div>
+            <div class="w-full">
+              <LineChart graphData={data.octData.monthlyChart} sty />
+            </div>
           </div>
         </div>
         <div class="3">
-          <div class="flex justify-center items-center">
+          <div class="flex justify-center items-center flex-col">
             <h2 class="text-xl">サーバー</h2>
+            <div class="w-full">
+              <LineChart graphData={data.mrData.dailyChart} sty />
+            </div>
           </div>
         </div>
       </div>

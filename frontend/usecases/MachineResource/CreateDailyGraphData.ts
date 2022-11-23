@@ -1,10 +1,10 @@
-import { OperationCoreE } from "@🧩/kadodeApiT.ts";
+import { MachineResourceE } from "@🧩/kadodeApiT.ts";
 import { lineChartT } from "@🧩/fresh_chartsT.ts";
 
 const ENDPOINT = Deno.env.get("API_URL") +
-  "/OperationCoreTransitionPerHours/relative/month";
+  "/MachineResource/relative/day";
 
-export async function CreateMonthlyGraphData(): Promise<lineChartT> {
+export async function CreateDailyGraphData(): Promise<lineChartT> {
   const resp = await fetch(ENDPOINT, {
     method: "GET",
   });
@@ -12,38 +12,36 @@ export async function CreateMonthlyGraphData(): Promise<lineChartT> {
     const body = await resp.text();
     throw new Error(`${resp.status} ${body}`);
   }
-  const jsonData: OperationCoreE[] = await resp.json();
+  const jsonData: MachineResourceE[] = await resp.json();
   if (jsonData.errors) {
     throw new Error(jsonData.errors.map((e: Error) => e.message).join("\n"));
   }
 
-  const monthlyData: OperationCoreE[] = jsonData.reverse();
+  const monthlyData: MachineResourceE[] = jsonData.reverse();
 
   return {
     // 日付
     xList: monthlyData.map((e) => {
       const date = new Date(e.created_at);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      return `${month}/${day}`;
+      const hour = date.getHours();
+      const minute = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes(); //10分未満が一桁になるの防止
+      return `${hour}:${minute}`;
     }),
     dataList: [
-      //ユーザー数もエラー無く描画できるが、大きさが違いすぎて見た目崩れるので除外
-      // {
-      //   label: "ユーザー数",
-      //   data: monthlyData.map((e) => e.user_total),
-      //   borderColor: "rgb(255, 99, 132)",
-      //   backgroundColor: "rgb(255, 99, 132)",
-      // },
       {
-        label: "diary",
-        data: monthlyData.map((e) => e.diary_total),
-        color: "rgb(54, 162, 235)",
+        label: "cpu",
+        data: monthlyData.map((e) => e.cpu),
+        color: "rgb(255, 100, 33)",
       },
       {
-        label: "statistic",
-        data: monthlyData.map((e) => e.statistic_per_date_total),
+        label: "memory",
+        data: monthlyData.map((e) => e.memory),
         color: "rgb(255, 206, 86)",
+      },
+      {
+        label: "disk",
+        data: monthlyData.map((e) => e.disk),
+        color: "rgb(86, 255, 246)",
       },
     ],
     options: {
@@ -53,11 +51,6 @@ export async function CreateMonthlyGraphData(): Promise<lineChartT> {
       legend: {
         display: true,
         align: "end",
-      },
-      title: {
-        display: false,
-        //明らかに謎挙動するので廃止
-        // text: "利用状況の推移",
       },
       scales: {
         xAxes: [
@@ -79,11 +72,13 @@ export async function CreateMonthlyGraphData(): Promise<lineChartT> {
           {
             scaleLabel: {
               display: true,
-              labelString: "count",
+              labelString: "percent",
               fontColor: "black",
               fontSize: 16,
             },
             ticks: {
+              min: 0,
+              max: 100,
               stepSize: 5,
               fontColor: "black",
               fontSize: 14,
