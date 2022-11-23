@@ -63,7 +63,10 @@ export default function Paper({ data }: PageProps<forRenderData>) {
   const octTotal = data.octData.daily.total;
   const mrLatest = data.mrData.latest;
   const octLast1Day = data.octData.daily.last1Day;
-  const d = new Date();
+  //どの環境でもjst時刻で表示するようにする
+  const d = new Date(
+    Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000
+  );
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
   const day = d.getDate();
