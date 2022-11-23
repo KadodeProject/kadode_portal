@@ -7,7 +7,7 @@ export interface OperationCoreE {
 
 export interface MachineResourceE {
   id?: number;
-  machine: string;
+  machine?: string;
   cpu: number;
   memory: number;
   disk: number;

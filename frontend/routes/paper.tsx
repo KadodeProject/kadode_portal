@@ -7,11 +7,14 @@ import {
 } from "@💿/OperationCoreTransition/GetDailyChange.ts";
 import { CreateMonthlyGraphData } from "@💿/OperationCoreTransition/CreateMonthlyGraphData.ts";
 import { CreateDailyGraphData } from "@💿/MachineResource/CreateDailyGraphData.ts";
+import { GetLatestData } from "@💿/MachineResource/GetLatestData.ts";
 //型
+import { MachineResourceE } from "@🧩/kadodeApiT.ts";
 import { lineGraphT } from "@🧩/fresh_chartsT.ts";
 // みため
 import Layout from "@🌟/M5PaperLayout.tsx";
 import ResponseTimeWrapper from "@🗃/Paper/Characters/ResponseTimeWrapper.tsx";
+import MachineResourceWrapper from "@🗃/Paper/Characters/MachineResourceWrapper.tsx";
 import OperationCoreInfoWrapper from "@🗃/Paper/Characters/OperationCoreInfoWrapper.tsx";
 //グラフ
 import LineChart from "@🗃/Graph/fresh_charts/LineChart.tsx";
@@ -23,6 +26,7 @@ type forRenderData = {
 
 /** MachineResource系のデータ */
 type mrData = {
+  latest: MachineResourceE;
   dailyChart: lineGraphT[];
 };
 /** OperationCoreTransition系のデータ */
@@ -36,12 +40,14 @@ export const handler: Handlers<forRenderData> = {
     const octDailyData = await GetDailyChange<getDailyT>();
     const octMonthlyData = await CreateMonthlyGraphData<lineGraphT[]>();
     const mrDailyData = await await CreateDailyGraphData<lineGraphT[]>();
+    const mrLatestData = await await GetLatestData<MachineResourceE>();
     return ctx.render({
       octData: {
         daily: octDailyData,
         monthlyChart: octMonthlyData,
       },
       mrData: {
+        latest: mrLatestData,
         dailyChart: mrDailyData,
       },
     });
@@ -54,8 +60,9 @@ export const handler: Handlers<forRenderData> = {
  * 色もグレースケールになるため細かい組み合わせは不要(意味がない)
  */
 export default function Paper({ data }: PageProps<forRenderData>) {
-  const total = data.octData.daily.total;
-  const last1Day = data.octData.daily.last1Day;
+  const octTotal = data.octData.daily.total;
+  const mrLatest = data.mrData.latest;
+  const octLast1Day = data.octData.daily.last1Day;
   const date = new Date();
   const currentTime =
     date.getFullYear() +
@@ -81,8 +88,8 @@ export default function Paper({ data }: PageProps<forRenderData>) {
           <p>{currentTime}</p>
         </div>
       </div>
-      <div class="grid grid-cols-3 mt-8 mx-4">
-        <div class="1">
+      <div class="grid grid-cols-2 mt-8 mx-4">
+        {/* <div class="1">
           <div class="flex justify-center items-center flex-col">
             <h2 class="text-xl">レスポンス</h2>
             <div class="grid grid-cols-4 w-full">
@@ -96,25 +103,48 @@ export default function Paper({ data }: PageProps<forRenderData>) {
           <div class="flex justify-center items-center flex-col mt-6">
             <h2 class="text-xl">アクセス</h2>
           </div>
-        </div>
+        </div> */}
         <div class="2">
           <div class="flex justify-center items-center flex-col">
             <h2 class="text-xl">ユーザー</h2>
             <div class="grid grid-cols-3 w-full">
-              <OperationCoreInfoWrapper title="ユーザー" unit="人" number={0} />
-              <OperationCoreInfoWrapper title="日記" unit="個" number={0} />
-              <OperationCoreInfoWrapper title="統計" unit="個" number={0} />
+              <OperationCoreInfoWrapper
+                title="ユーザー"
+                unit="人"
+                total={octTotal.user_total}
+                change={octLast1Day.user_change}
+              />
+              <OperationCoreInfoWrapper
+                title="日記"
+                unit="個"
+                total={octTotal.diary_total}
+                change={octLast1Day.diary_change}
+              />
+              <OperationCoreInfoWrapper
+                title="統計"
+                unit="個"
+                total={octTotal.statistic_per_date_total}
+                change={octLast1Day.statistic_per_date_change}
+              />
             </div>
             <div class="w-full">
-              <LineChart graphData={data.octData.monthlyChart} sty />
+              <LineChart graphData={data.octData.monthlyChart} />
             </div>
           </div>
         </div>
         <div class="3">
           <div class="flex justify-center items-center flex-col">
             <h2 class="text-xl">サーバー</h2>
+            <div class="grid grid-cols-3 w-full">
+              <MachineResourceWrapper title="CPU" percent={mrLatest.cpu} />
+              <MachineResourceWrapper
+                title="Memory"
+                percent={mrLatest.memory}
+              />
+              <MachineResourceWrapper title="Disk" percent={mrLatest.disk} />
+            </div>
             <div class="w-full">
-              <LineChart graphData={data.mrData.dailyChart} sty />
+              <LineChart graphData={data.mrData.dailyChart} />
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ export default function ResponseTimeWrapper({
   return (
     <div class="flex justify-center items-center flex-col">
       <h3 class="">{title}</h3>
-      <p class="text-2xl">
+      <p class="text-3xl">
         {time}
         <span class="text-xs">ms</span>
       </p>
