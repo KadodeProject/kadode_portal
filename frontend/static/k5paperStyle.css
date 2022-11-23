@@ -1,0 +1,15 @@
+/* m5paper表示用の設定 */
+main {
+  width: 960px;
+  height: 540px;
+  border: 1px solid blue;
+  overflow: hidden;
+}
+
+.chartWrapper svg {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 90% !important;
+  height: 90% !important;
+}

@@ -1,16 +1,11 @@
 export interface lineChartT {
   xList: string[] | number[];
   dataList: lineChartDataListT[];
-  option?: graphOptionT;
+  options?: any; //これはライブラリの実装すぎるのでanyで許されたい
 }
 
 interface lineChartDataListT {
   label: string;
   data: number[];
-  borderColor: string;
-  backgroundColor: string;
-}
-interface graphOptionT {
-  yMax?: number;
-  yMin?: number;
+  color: string;
 }
