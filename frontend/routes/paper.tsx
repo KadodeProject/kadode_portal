@@ -63,17 +63,25 @@ export default function Paper({ data }: PageProps<forRenderData>) {
   const octTotal = data.octData.daily.total;
   const mrLatest = data.mrData.latest;
   const octLast1Day = data.octData.daily.last1Day;
-  const date = new Date();
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hours = d.getHours();
+  const minutes = d.getMinutes();
+  const seconds = d.getSeconds();
   const currentTime =
-    date.getFullYear() +
+    year +
     "/" +
-    (date.getMonth() + 1) +
+    ("0" + month).slice(-2) +
     "/" +
-    date.getDate() +
-    "/" +
-    date.getHours() +
+    ("0" + day).slice(-2) +
+    " " +
+    ("0" + hours).slice(-2) +
     ":" +
-    date.getMinutes();
+    ("0" + minutes).slice(-2) +
+    ":" +
+    ("0" + seconds).slice(-2);
   return (
     <Layout>
       <div class="flex">
