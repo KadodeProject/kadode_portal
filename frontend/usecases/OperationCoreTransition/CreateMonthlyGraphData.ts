@@ -12,15 +12,12 @@ export async function CreateMonthlyGraphData(): Promise<lineChartT> {
     const body = await resp.text();
     throw new Error(`${resp.status} ${body}`);
   }
-  const json: OperationCoreE[] = await resp.json();
-  if (json.errors) {
-    throw new Error(json.errors.map((e: Error) => e.message).join("\n"));
+  const jsonData: OperationCoreE[] = await resp.json();
+  if (jsonData.errors) {
+    throw new Error(jsonData.errors.map((e: Error) => e.message).join("\n"));
   }
 
-  //24個に1個に絞って反転させることでいい感じにグラフで表示できるようにする
-  const monthlyData: OperationCoreE[] = json.filter((e, i) => {
-    return (i % 24 === 0);
-  }).reverse();
+  const monthlyData: OperationCoreE[] = jsonData.reverse();
 
   return {
     // 日付
