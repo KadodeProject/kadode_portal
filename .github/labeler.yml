@@ -6,6 +6,7 @@
   - frontend/usecases/*
 🗃components:
   - frontend/components/*
+🖼layout:
   - frontend/layout/*
 👗static:
   - frontend/static/*
