@@ -18,6 +18,7 @@ import Layout from "@🌟/BasicLayout.tsx";
 //カード
 import UserChangeCard from "@🗃/Card/UserChangeCard.tsx";
 import ProductIntroCard from "@🗃/Card/ProductIntroCard.tsx";
+import BrandIntroCard from "@🗃/Card/BrandIntroCard.tsx";
 import ExternalServiceIntroCard from "@🗃/Card/ExternalServiceIntroCard.tsx";
 //フレーム
 import IndexArticleFrame from "@🗃/Frame/IndexArticleFrame.tsx";
@@ -140,7 +141,16 @@ export default function Home({ data }: PageProps<forIndexData>) {
           description="かどで日記の情報を電子ペーパーで表示する！"
           img_url="img/productImage/paper/paper1.jpg"
         /> */}
-        <IndexHeadline title="🍹よければこちらも" />
+        <IndexHeadline title="🍹かどでプロジェクトについて知る" />
+        <div class="flex justify-center flex-wrap">
+          <BrandIntroCard
+            title="デザイン"
+            url="/design"
+            description="かどでプロジェクトのデザインについて"
+          />
+        </div>
+
+        <IndexHeadline title="🧃よければこちらも" />
         <h3 class="text-2xl text-center mt-4">note最新記事</h3>
         <IndexArticleFrame articlesData={data.noteArticles} />
         <div class="flex justify-center flex-wrap">
